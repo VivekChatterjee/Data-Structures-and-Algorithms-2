@@ -1,8 +1,7 @@
 class Solution {
 public:
-    void dfs(int i, int j, vector<vector<int>>& grid, vector<vector<int>>& vis)
+    void dfs(int i, int j, vector<vector<int>>& grid)
     {
-        vis[i][j] = 1;
         grid[i][j] = 0;
         int m = grid.size();
         int n = grid[0].size();
@@ -11,35 +10,22 @@ public:
         {
             int r = i+row[k];
             int c = j+col[k];
-            if(r>=0 && r<m && c>=0 && c<n && grid[r][c] == 1 && !vis[r][c])
+            if(r>=0 && r<m && c>=0 && c<n && grid[r][c] == 1)
             {
-                dfs(r, c, grid, vis);
+                dfs(r, c, grid);
             }
         }
     }
     int numEnclaves(vector<vector<int>>& grid) {
         int m = grid.size();
         int n = grid[0].size();
-        vector<vector<int>>vis(m, vector<int>(n));
-        // top Boundary row
-        for(int i=0; i<n; i++)
-        {
-            if(!vis[0][i] && grid[0][i] == 1) dfs(0, i, grid, vis);
-        }
-        // right Boundary row
         for(int i=0; i<m; i++)
         {
-            if(!vis[i][n-1] && grid[i][n-1] == 1) dfs(i, n-1, grid, vis);
-        }
-        // down Boundary row
-        for(int i=0; i<n; i++)
-        {
-            if(!vis[m-1][i] && grid[m-1][i] == 1) dfs(m-1, i, grid, vis);
-        }
-        // left Boundary row
-        for(int i=0; i<m; i++)
-        {
-            if(!vis[i][0] && grid[i][0] == 1) dfs(i, 0, grid, vis);
+            for(int j=0; j<n; j++)
+            {
+                if((i == 0 || i == m-1 || j == 0 || j == n-1) && grid[i][j] == 1) 
+                    dfs(i, j, grid);
+            }
         }
         int ans = 0;
         for(int i=1; i<m-1; i++)
