@@ -4,15 +4,10 @@ public:
     {
         if(one) vis[num] = 1;
         else vis[num] = -1;
-        // int n = graph.size();
-        // cout<<num<<":"<<endl;
-        // for(int i = 0; i<n;i++)
-        //     cout<<vis[i]<<" ";
-        // cout<<endl; 
         for(auto i: graph[num])
         {
-            if(!vis[i]) if(!isBip(!one, i, graph, vis)) return 0;
             if(vis[i] && vis[i] == vis[num]) return 0;
+            else if(!vis[i]) if(!isBip(!one, i, graph, vis)) return 0;
         }
         return 1;
     }
