@@ -1,37 +1,36 @@
 class Solution {
 public:
-    void dfs(string rec, unordered_map<string, int>&index, unordered_map<string, int>&present, vector<vector<string>>& ingredients)
-    {
-        present[rec] = 2;
-        for(auto i: ingredients[index[rec]])
-        {
-            if(!present.count(i) && !index.count(i))
-            {
-                present[i] = 2;
-                return;
-            }
-            else if(!present.count(i))
-            {
-                dfs(i, index, present, ingredients);
-                if(present[i] == 2) return;
-            }
-            else if(present[i] == 2)  return;
-        }
-        present[rec] = 1;
-    }
-    vector<string> findAllRecipes(vector<string>& recipes, vector<vector<string>>& ingredients, vector<string>& supplies) {
+    // USING TOPO SORT
+    vector<string> findAllRecipes(vector<string>& recipes, vector<vector<string>>& ing, vector<string>& sup) {
         int n = recipes.size();
-        vector<string>ans;
-        unordered_map<string, int> index, present;
-        for(int i=0; i<n; i++) index[recipes[i]] = i;
-        for(auto i: supplies) present[i] = 1;
-        for(auto i: recipes)
+        unordered_map<string, vector<string>> rel;
+        unordered_map<string, int>indegree;
+        // recipe is pointing to ingredients but in this prob we've to reverse the edges
+        // so ingredients are pointing towards recipes
+        for(int i=0; i<n; i++)
         {
-            if(!present.count(i))
+            for(int j=0; j<ing[i].size(); j++)
             {
-                dfs(i, index, present, ingredients);
+                rel[ing[i][j]].push_back(recipes[i]);
+                indegree[recipes[i]]++;
             }
-            if(present[i] == 1) ans.push_back(i);
+        }
+        queue<string>q;
+        vector<string>ans;
+        for(string s: sup) q.push(s);
+        while(!q.empty())
+        {
+            string f = q.front();
+            q.pop();
+            for(auto i: rel[f])
+            {
+                indegree[i]--;
+                if(indegree[i] == 0) q.push(i);
+            }
+        }
+        for(int i=0; i<n; i++)
+        {
+            if(indegree[recipes[i]] == 0) ans.push_back(recipes[i]);
         }
         return ans;
     }
