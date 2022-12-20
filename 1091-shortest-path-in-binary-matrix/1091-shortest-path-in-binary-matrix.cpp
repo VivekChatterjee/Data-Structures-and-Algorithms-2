@@ -5,12 +5,16 @@ public:
         int n = grid.size();
         if(n == 1 && !grid[0][0]) return 1;
         // {distance, {rowNode, colNode}}
-        priority_queue<pipii, vector<pipii>, greater<pipii>>p; 
+        // priority_queue<pipii, vector<pipii>, greater<pipii>>p; 
+        // we can use queue, check notes
+        queue<pipii>p;
         if(grid[0][0] == 0) p.push({1, {0, 0}});
         vector<vector<int>>dis(n, vector<int>(n, 1e7));
         while(!p.empty())
         {
-            auto curElement = p.top();
+            // auto curElement = p.top();
+            // p.pop();
+            auto curElement = p.front();
             p.pop();
             int curDis = curElement.first;
             int curRow = curElement.second.first;
