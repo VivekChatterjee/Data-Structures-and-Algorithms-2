@@ -10,16 +10,7 @@ public:
         // priority_queue<pipii>p;
         p.push({0, {0, 0}});
         vector<vector<int>>dis(m, vector<int>(n, 1e7));
-        vector<vector<pair<int, int>>>par(m, vector<pair<int, int>>(n));
-        for(int i=0; i<m; i++)
-        {
-            for(int j=0; j<n; j++)
-            {
-                par[i][j] = {i, j};
-            }
-        }
         vector<int>row={-1, 0, 1, 0}, col = {0, -1, 0, 1};
-        int diff = 0;
         while(!p.empty())
         {
             auto curElement = p.top();
@@ -27,8 +18,7 @@ public:
             int curDis = curElement.first;
             int curRow = curElement.second.first;
             int curCol = curElement.second.second;
-            int parRow = par[curRow][curCol].first;
-            int parCol = par[curRow][curCol].second;
+            if(curRow == m-1 && curCol == n-1) return curDis;
             for(int i=0; i<4;i++)
             {
                 int ii = curRow + row[i];
@@ -40,11 +30,10 @@ public:
                     {
                         dis[ii][jj] = abv;
                         p.push({abv, {ii, jj}});
-                        par[ii][jj] = {curRow, curCol};
                     }
                 }
             }
         }
-        return (dis[m-1][n-1] == 1e7)? -1 : dis[m-1][n-1];
+        return -1;
     }
 };
