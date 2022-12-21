@@ -1,33 +1,42 @@
 #define pii pair<int, int>
-// FLOYD WARSHAL
+// DIJKSTRA'S ALGO
 class Solution {
 public:
     int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
-        vector<vector<int>>dis(n, vector<int>(n, INT_MAX));
+        vector<pii>adj[n];
         for(auto i: edges)
         {
-            dis[i[0]][i[1]] = i[2]; // {node, weight}
-            dis[i[1]][i[0]] = i[2];
+            adj[i[0]].push_back({i[1], i[2]}); // {node, distance}
+            adj[i[1]].push_back({i[0], i[2]});
         }
-        for(int i=0; i<n; i++) dis[i][i] = 0;
-        for(int k=0; k<n; k++)
-        {
-            for(int i=0; i<n; i++)
-            {
-                for(int j=0; j<n; j++)
-                {
-                    if(dis[i][k] == INT_MAX || dis[k][j] == INT_MAX) continue;
-                    dis[i][j] = min(dis[i][j], dis[i][k] + dis[k][j]);
-                }
-            }
-        }
-        int cityCount = n, cityNumber = -1;
+        priority_queue<pii, vector<pii>, greater<pii>>p; // {distance, node}
+        int cityCount = 1e8, cityNumber = -1;
         for(int i=0; i<n; i++)
         {
-            int ct = 0;
-            for(int j=0; j<n; j++)
+            vector<int>dis(n, 1e8);
+            dis[i] = 0;
+            p.push({0, i});
+            while(!p.empty())
             {
-                if(dis[i][j] <= distanceThreshold) ct++;
+                auto cur = p.top();
+                p.pop();
+                int curD = cur.first;
+                int curNode = cur.second;
+                for(auto i: adj[curNode])
+                {
+                    int node = i.first;
+                    int distance = i.second;
+                    if(curD + distance < dis[node])
+                    {
+                        dis[node] = curD + distance;
+                        p.push({curD + distance, node});
+                    }
+                }
+            }
+            int ct = 0;
+            for(int i=0; i<n; i++)
+            {
+                if(dis[i] <= distanceThreshold) ct++;
             }
             if(ct <= cityCount)
             {
@@ -35,6 +44,7 @@ public:
                 cityNumber = i;
             }
         }
+        
         return cityNumber;        
     }
 };
