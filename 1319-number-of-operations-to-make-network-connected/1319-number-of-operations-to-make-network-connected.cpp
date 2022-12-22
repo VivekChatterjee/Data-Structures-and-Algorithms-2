@@ -1,7 +1,7 @@
 class DisjointSet
 {
-    vector<int>rank, size, parent;
     public:
+    vector<int>rank, size, parent;
     DisjointSet(int n)
     {
         rank.resize(n+1, 0);
@@ -49,27 +49,23 @@ public:
     int makeConnected(int n, vector<vector<int>>& connections) {
         int total = connections.size();
         if(total < n-1) return -1;
-        int count = 0;
         DisjointSet d(total);
         int one = 0;
         for(int i=0; i<total; i++)
         {
             int a = connections[i][0];
             int b = connections[i][1];
-            if(d.findPar(a) != d.findPar(b))
+            if(d.parent[a] != d.parent[b])
             {
-                one = a;
+                // one = a;
                 d.findUnionByRank(a, b);
             }
         }
+        int count = 0;
         for(int i=0; i<n; i++)
         {
-            if(d.findPar(i) != d.findPar(one))
-            {
-                count++;
-                d.findUnionByRank(one, i);
-            }
+            if(d.parent[i] == i) count++;
         }
-        return count;
+        return count - 1;
     }
 };
