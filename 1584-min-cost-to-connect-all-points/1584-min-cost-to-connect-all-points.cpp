@@ -1,3 +1,4 @@
+// KRUSKAL'S ALGO
 #define pii pair<int, pair<int, int>>
 class DisjointSet
 {
