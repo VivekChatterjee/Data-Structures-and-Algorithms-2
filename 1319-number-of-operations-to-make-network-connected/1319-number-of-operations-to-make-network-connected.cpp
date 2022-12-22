@@ -1,3 +1,4 @@
+// no. of connected components - 1 is the answer
 class DisjointSet
 {
     public:
@@ -55,11 +56,7 @@ public:
         {
             int a = connections[i][0];
             int b = connections[i][1];
-            if(d.parent[a] != d.parent[b])
-            {
-                // one = a;
-                d.findUnionByRank(a, b);
-            }
+            if(d.parent[a] != d.parent[b]) d.findUnionByRank(a, b);
         }
         int count = 0;
         for(int i=0; i<n; i++)
