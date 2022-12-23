@@ -61,8 +61,8 @@ public:
             int u = edges[i][0];
             int v = edges[i][1];
             if(d.findPar(u) != d.findPar(v)) d.unionRank(u, v);
-            else ans.push_back({u, v});
+            else return {u, v};
         }
-        return {ans.back().first, ans.back().second};
+        return {};
     }
 };
