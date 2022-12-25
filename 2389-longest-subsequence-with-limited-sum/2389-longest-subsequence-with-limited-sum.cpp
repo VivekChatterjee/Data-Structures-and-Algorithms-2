@@ -1,18 +1,19 @@
 class Solution {
 public:
-    int numQueries(const vector<int>& nums, int numsIndex, int remaining) {
-      if (numsIndex >= nums.size() || remaining <= 0) return 0;
-      const int diff = remaining - nums[numsIndex];
-      if (diff < 0) return 0;
-      return 1 + numQueries(nums, numsIndex + 1, diff);
+    int longest(int i, vector<int>& nums, int sum)
+    {
+        int n = nums.size();
+        if(i >= n) return 0;
+        if(sum - nums[i] >= 0) return 1 + longest(i+1, nums, sum - nums[i]);
+        else return 0;
     }
-
     vector<int> answerQueries(vector<int>& nums, vector<int>& queries) {
-      vector<int> answer;
-      sort(nums.begin(), nums.end());
-      for (int i = 0; i < queries.size(); i++) {
-        answer.push_back(numQueries(nums, 0, queries[i]));
-      }
-      return answer;
+        vector<int>ans;
+        sort(nums.begin(), nums.end());
+        for(int i=0; i<queries.size(); i++)
+        {
+            ans.push_back(longest(0, nums, queries[i]));
+        }
+        return ans;
     }
 };
