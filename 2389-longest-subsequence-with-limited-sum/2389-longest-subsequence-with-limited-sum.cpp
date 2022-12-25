@@ -10,10 +10,7 @@ public:
     vector<int> answerQueries(vector<int>& nums, vector<int>& queries) {
         vector<int>ans;
         sort(nums.begin(), nums.end());
-        for(int i=0; i<queries.size(); i++)
-        {
-            ans.push_back(longest(0, nums, queries[i]));
-        }
+        for(int i=0; i<queries.size(); i++) ans.push_back(longest(0, nums,queries[i]));
         return ans;
     }
 };
