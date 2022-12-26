@@ -10,19 +10,23 @@ public:
                 count++;
                 last = price[i];
             }
-            if(count == k) break;
         }
-        return (count == k);
+        return (count >= k);
     }
     int maximumTastiness(vector<int>& price, int k) {
         sort(price.begin(), price.end());
-        int l = 0, h = 1e9;
-        while(l < h)
+        int n = price.size();
+        int l = 0, h = price[n-1] - price[0], ans = -1;
+        while(l <= h)
         {
             int mid = l + (h - l) / 2;
-            if(isValid(mid, price, k)) l = mid + 1;
-            else h = mid;
+            if(isValid(mid, price, k))
+            {
+                ans = mid;
+                l = mid + 1;
+            }
+            else h = mid - 1;
         }
-        return l - 1;
+        return ans;
     }
 };
