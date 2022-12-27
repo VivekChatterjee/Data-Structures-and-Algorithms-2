@@ -14,52 +14,29 @@ public:
     TreeNode* reverseOddLevels(TreeNode* root) {
         queue<TreeNode*>q;
         q.push(root);
-        vector<vector<int>>rev;
         int ind = 0;
-        // storing value
+        vector<int>temp, values;
         while(!q.empty())
         {
-            vector<int>level;
             int n = q.size();
-            for(int i=0; i<n ;i++)
+            for(int i=0; i<n; i++)
             {
                 TreeNode* node = q.front();
                 q.pop();
-                if(ind % 2 != 0) level.push_back(node->val);
-                if(node->left) q.push(node->left);
-                if(node->right) q.push(node->right);
-            }
-            ind++;
-            if(!level.empty())
-            {
-                reverse(level.begin(), level.end());
-                rev.push_back(level);
-            }
-        }
-    
-        // reversing value
-        int vecInd = -1;
-        ind = 0;
-        queue<TreeNode*>q2;
-        q2.push(root);
-        while(!q2.empty())
-        {
-            vector<int>level;
-            int n = q2.size();
-            int elementInd = 0;
-            if(ind % 2 != 0) vecInd++;
-            for(int i=0; i<n ;i++)
-            {
-                TreeNode* node = q2.front();
-                q2.pop();
-                if(ind % 2 != 0)
+                if(ind % 2 != 0) node->val = temp[n-i-1];
+                if(node->left)
                 {
-                    node->val = rev[vecInd][elementInd];
-                    elementInd++;
+                    q.push(node->left);
+                    values.push_back(node->left->val);
                 }
-                if(node->left) q2.push(node->left);
-                if(node->right) q2.push(node->right);
+                if(node->right)
+                {
+                    q.push(node->right);
+                    values.push_back(node->right->val);
+                }
             }
+            temp = values;
+            values.clear();
             ind++;
         }
         return root;
