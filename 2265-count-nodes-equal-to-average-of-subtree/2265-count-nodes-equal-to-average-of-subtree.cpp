@@ -11,31 +11,19 @@
  */
 class Solution {
 public:
-    int sumCount(TreeNode* root, unordered_map<TreeNode*, int>&sum)
+    pair<int, int> findCount(TreeNode* root, int &ans)
     {
-        if(!root) return 0;
-        return sum[root] = root->val + sumCount(root->left, sum) 
-        + sumCount(root->right, sum);
-    }
-    int nodeCount(TreeNode* root, unordered_map<TreeNode*, int>&count)
-    {
-        if(!root) return 0;
-        return count[root] = 1 + nodeCount(root->left, count) 
-        + nodeCount(root->right, count);
-    }
-    void findCount(TreeNode * root, unordered_map<TreeNode*, int>&sum, unordered_map<TreeNode*, int>&count, int &ans)
-    {
-        if(!root) return;
-        if((sum[root] / count[root]) == root->val) ans++;
-        findCount(root->left, sum, count, ans);
-        findCount(root->right, sum, count, ans);
+        if(!root) return {0, 0};
+        auto left = findCount(root->left, ans);
+        auto right = findCount(root->right, ans);
+        int sum = left.first + right.first + root->val;
+        int count = left.second + right.second + 1;
+        ans += ((sum / count) == root->val);
+        return {sum, count};
     }
     int averageOfSubtree(TreeNode* root) {
-        unordered_map<TreeNode*, int>sum, count;
         int ans = 0;
-        sumCount(root, sum);
-        nodeCount(root, count);
-        findCount(root, sum, count, ans);
+        findCount(root, ans);
         return ans;
     }
 };
