@@ -1,16 +1,5 @@
 class Solution {
 public:
-    void dfs(int i, int j, vector<vector<int>>& grid)
-    {
-        int m = grid.size();
-        int n = grid[0].size();
-        if(i<0 || i>=m || j<0 || j>=n || grid[i][j] == -1 || grid[i][j] == 0) return;
-        grid[i][j] = -1;
-        dfs(i, j+1, grid);
-        dfs(i+1,  j, grid);
-        dfs(i, j-1, grid);
-        dfs(i-1, j, grid);
-    }
     void dfs2(int i, int j, vector<vector<int>>& grid2, vector<vector<int>>& grid1, 
              bool &same)
     {
@@ -18,7 +7,7 @@ public:
         int n = grid2[0].size();
         if(i<0 || i>=m || j<0 || j>=n || grid2[i][j] == -1 || grid2[i][j] == 0) return;
         grid2[i][j] = -1;
-        if(grid1[i][j] != -1) same = false;
+        if(grid1[i][j] != 1) same = false;
         dfs2(i, j+1, grid2, grid1, same);
         dfs2(i+1, j, grid2, grid1, same);
         dfs2(i, j-1, grid2, grid1, same);
@@ -28,13 +17,6 @@ public:
         int m = grid1.size();
         int n = grid1[0].size();
         int ans = 0;
-        for(int i=0; i<m; i++)
-        {
-            for(int j=0; j<n; j++)
-            {
-                if(grid1[i][j] == 1) dfs(i, j, grid1);
-            }
-        }
         for(int i=0; i<m; i++)
         {
             for(int j=0; j<n; j++)
