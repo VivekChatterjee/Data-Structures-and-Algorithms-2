@@ -7,8 +7,6 @@ public:
         int ans = 0;
         for(auto i: m)
         {
-            // cout<<i.first<<" : "<<i.second<<" ";
-            // cout<<ans<<" pehle ";
             if(i.second == 1) return -1;
             else
             {
@@ -33,7 +31,6 @@ public:
                     }
                 }
             }
-            // cout<<ans<<" last\n";
         }
         return ans;        
     }
