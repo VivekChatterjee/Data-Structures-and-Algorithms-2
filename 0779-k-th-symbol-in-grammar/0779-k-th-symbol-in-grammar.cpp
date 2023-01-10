@@ -7,7 +7,7 @@ public:
             int mid = left + ( right - left ) / 2 + 1;
             if (k >= mid) {
                 left = mid;
-                ans^=1;
+                ans=!ans;
             }
             else right = mid - 1;
         }
