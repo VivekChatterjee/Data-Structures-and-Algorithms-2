@@ -1,19 +1,13 @@
 class Solution {
 public:
-    int kthGrammar( int n, int k ) {
-        int left = 0, right = (1 << (n - 1)) - 1;
-        int ans=0;
-        while (left < right) {
-            int mid = left + ( right - left ) / 2;
-            if (mid >= k-1) {
-                right = mid;
-            }
-            else
-            {
-                ans=!ans;
-                left = mid + 1;
-            }
-        }
-        return ans;
+    int solve(int n, int k)
+    {
+        if(n==1 && k==1) return 0;
+        int mid=pow(2,(n-1))/2;
+        if(k<=mid) return solve(n-1, k);
+        else return !solve(n-1, k-mid);
+    }
+    int kthGrammar(int n, int k) {
+        return solve(n, k);
     }
 };
