@@ -4,7 +4,6 @@ public:
     bool isValid(int mid, vector<int>&bloom, int m, int k)
     {
         int n=bloom.size();
-        if((ll)n<((ll)m*k)) return 0;
         int bouq=0, adj=0;
         for(int i: bloom)
         {
