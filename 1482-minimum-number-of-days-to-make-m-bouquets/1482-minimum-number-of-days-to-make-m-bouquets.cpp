@@ -18,7 +18,6 @@ public:
             }
             else adj=0;
         }
-        if(adj>=k) bouq++;
         return bouq>=m;
     }
     int minDays(vector<int>& bloom, int m, int k) {
