@@ -7,8 +7,8 @@ public:
         int ans=-1;
         while(s<=e)
         {
-            ll mid=s+(e-s)/2;
-            if(mid*mid <= x)
+            int mid=s+(e-s)/2;
+            if(mid <= x/mid)
             {
                 ans=mid;
                 s=mid+1;
