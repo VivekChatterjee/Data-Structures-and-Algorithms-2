@@ -4,21 +4,7 @@ public:
     bool isValid(int mid, vector<int>&piles, int h)
     {
         ll n=0;
-        for(int i: piles)
-        {
-            if(mid<i)
-            {
-                if(i%mid != 0)
-                {
-                    n+=((ll)i/mid)+1;
-                }
-                else n+=((ll)i/mid);
-            }
-            else
-            {
-                n++;
-            }
-        }
+        for(int i: piles) n += ceil((double) i/mid);
         return n<=h;
     }
     int minEatingSpeed(vector<int>& piles, int h) {
