@@ -17,17 +17,14 @@ public:
                     adj=0;
                 }
             }
-            else
-            {
-                adj=0;
-            }
+            else adj=0;
         }
         if(adj>=k) bouq++;
         return bouq>=m;
     }
     int minDays(vector<int>& bloom, int m, int k) {
-        int s=1,e=INT_MIN;
-        for(int i: bloom) e=max(e, i);
+        int s=INT_MAX,e=INT_MIN;
+        for(int i: bloom) s=min(s, i), e=max(e, i);
         int ans=-1;
         while(s<=e)
         {
