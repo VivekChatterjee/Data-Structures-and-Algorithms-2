@@ -6,9 +6,10 @@ public:
         int n=nums.size(), num=nums[0];
         vector<vector<int>>ans;
         set<vector<int>>st;
+        if(n<4) return ans;
         for(int i=0; i<n; i++)
         {
-            if(i!=0)
+            if(i!=0) // this is reducing time
             {
                 if(nums[i]==num) continue;
                 num=nums[i];
