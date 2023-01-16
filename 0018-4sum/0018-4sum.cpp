@@ -2,13 +2,18 @@
 class Solution {
 public:
     vector<vector<int>> fourSum(vector<int>& nums, int target) {
-        int n=nums.size();
         sort(nums.begin(), nums.end());
+        int n=nums.size(), num=nums[0];
         vector<vector<int>>ans;
         set<vector<int>>st;
-        for(int i=0; i<n-3; i++)
+        for(int i=0; i<n; i++)
         {
-            for(int j=i+1; j<n-2; j++)
+            if(i!=0)
+            {
+                if(nums[i]==num) continue;
+                num=nums[i];
+            }
+            for(int j=i+1; j<n; j++)
             {
                 int s=j+1, e=n-1;
                 ll t=(ll)target-((ll)nums[i]+(ll)nums[j]);
