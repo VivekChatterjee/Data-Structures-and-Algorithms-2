@@ -3,15 +3,16 @@ class Solution {
 public:
     const ll K=1e9+7;
     int countHomogenous(string s) {
-        ll n=s.size();
         ll i=0, j=0, ans=0;
         unordered_map<char, ll>m;
         s+='#';
+        ll n=s.size();
         while(j<n)
         {
-            while(s[i] == s[j])
+            if(s[i] == s[j])
             {
                 j++;
+                continue;
             }
             ll size=j-i;
             ans+=(size * (size+1))/2;
