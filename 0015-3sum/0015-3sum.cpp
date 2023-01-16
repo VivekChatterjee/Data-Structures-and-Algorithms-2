@@ -7,8 +7,8 @@ public:
         set<vector<int>>s;
         for(int i=0; i<n; i++)
         {
-            int target=-nums[i];
             int j=i+1, k=n-1;
+            int target=-nums[i];
             while(j<k)
             {
                 if(nums[j]+nums[k] == target)
@@ -22,6 +22,6 @@ public:
             }
         }
         for(auto i: s) ans.push_back(i);
-        return ans;
+        return ans;        
     }
 };
