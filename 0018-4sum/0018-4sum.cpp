@@ -21,6 +21,8 @@ public:
                     {
                         ans.push_back(v);
                         st.insert(v);
+                        s++;
+                        e--;
                     }
                     else if((ll)sum<t) s++;
                     else e--;
