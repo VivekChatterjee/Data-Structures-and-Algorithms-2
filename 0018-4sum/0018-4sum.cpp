@@ -6,9 +6,9 @@ public:
         sort(nums.begin(), nums.end());
         vector<vector<int>>ans;
         set<vector<int>>st;
-        for(int i=0; i<n; i++)
+        for(int i=0; i<n-3; i++)
         {
-            for(int j=i+1; j<n; j++)
+            for(int j=i+1; j<n-2; j++)
             {
                 int s=j+1, e=n-1;
                 ll t=(ll)target-((ll)nums[i]+(ll)nums[j]);
