@@ -23,12 +23,15 @@ public:
                     vector<int>v(4);
                     v[0]=nums[i], v[1]=nums[j], v[2]=nums[s], v[3]=nums[e];
                     ll sum=(ll)nums[s]+(ll)nums[e];
-                    if(sum == t && st.find(v) == st.end())
+                    if(sum == t)
                     {
-                        ans.push_back(v);
-                        st.insert(v);
                         s++;
                         e--;
+                        if(st.find(v) == st.end()) // always checking this increases time
+                        {
+                            ans.push_back(v);
+                            st.insert(v);
+                        }
                     }
                     else if((ll)sum<t) s++;
                     else e--;
