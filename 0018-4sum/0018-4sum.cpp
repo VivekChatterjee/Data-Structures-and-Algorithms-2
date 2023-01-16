@@ -1,69 +1,43 @@
 #define ll long long int
-
 class Solution {
 public:
-    vector<vector<int>> fourSum(vector<int>& nums, int tt) {
-        
-        set<vector<int>>ss;
-        vector<vector<int>>v;
-        ll n=nums.size();
-        
-        sort(nums.begin(),nums.end());
-        
-        if(n<=3)
-            return v;
-        
-        
-        int num=nums[0];
-        
-        
-        for(ll i=0;i<n-3;i++)
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        sort(nums.begin(), nums.end());
+        int n=nums.size(), num=nums[0];
+        vector<vector<int>>ans;
+        set<vector<int>>st;
+        if(n<4) return ans;
+        for(int i=0; i<n; i++)
         {
-            
-            //checking if same values
-            if(i!=0)
+            if(i!=0) // this is reducing time
             {
-                    if(nums[i]==num)
-                        continue;
-                    
-                    num=nums[i];
+                if(nums[i]==num) continue;
+                num=nums[i];
             }
-            
-            for(ll j=i+1;j<n-2;j++)
+            for(int j=i+1; j<n; j++)
             {
-                ll s=j+1;
-                ll e=n-1;
-                
+                int s=j+1, e=n-1;
+                ll t=(ll)target-((ll)nums[i]+(ll)nums[j]);
                 while(s<e)
                 {
-                    
-                    if((nums[i]*1LL +nums[j]*1LL +nums[s]*1LL +nums[e]*1LL ) == tt)
+                    ll sum=(ll)nums[s]+(ll)nums[e];
+                    if(sum == t)
                     {
-                        
-                    vector<int>t(4);
-                    t[0]=nums[i];
-                    t[1]=nums[j];
-                    t[2]=nums[s];
-                    t[3]=nums[e];
-                        if(ss.find(t) == ss.end())
+                        vector<int>v(4);
+                        v[0]=nums[i], v[1]=nums[j], v[2]=nums[s], v[3]=nums[e];
+                        if(st.find(v) == st.end()) // always checking this increases time
                         {
-                            v.push_back(t);
-                            ss.insert(t);
+                            ans.push_back(v);
+                            st.insert(v);
                         }
-                        
                         s++;
                         e--;
                     }
-                    
-                    else if( nums[i]*1LL +nums[j]*1LL +nums[s]*1LL +nums[e]*1LL > tt)
-                        e--;
-                    
-                    else
-                        s++;
+                    else if((ll)sum<t) s++;
+                    else e--;
                 }
             }
         }
-        
-        return v;
+        return ans;
     }
 };
