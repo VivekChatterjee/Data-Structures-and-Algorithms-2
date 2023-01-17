@@ -16,7 +16,7 @@ public:
             {
                 v.pop_back();
             }
-            smallRight[i]=(v.empty())? (n - i) : (v.back() - i);
+            smallRight[i]=(v.empty())? n : v.back();
             v.push_back(i);
         }
         v.clear();
@@ -27,13 +27,15 @@ public:
             {
                 v.pop_back();
             }
-            smallLeft[i]=(v.empty())? i-(-1) : (i - v.back());
+            smallLeft[i]=(v.empty())? -1 : v.back();
             v.push_back(i);
         }
         ll ans=0;
         for(int i=0; i<n; i++)
         {
-            ans=(ans+(arr[i] * (smallLeft[i] * smallRight[i] % K) % K)) % K;
+            ll left=i-smallLeft[i];
+            ll right=smallRight[i]-i;
+            ans=(ans+(arr[i] * left * right)) % K;
         }
         return ans;
     }
