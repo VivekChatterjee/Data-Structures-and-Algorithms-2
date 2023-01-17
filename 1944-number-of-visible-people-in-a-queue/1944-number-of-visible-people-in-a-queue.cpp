@@ -11,8 +11,7 @@ public:
             {
                 ct++;
                 if(st.top() > heights[i]) break;
-                else
-                st.pop();
+                else  st.pop();
             }
             st.push(heights[i]);
             ans[k--]=(st.empty())? 0 : ct;
