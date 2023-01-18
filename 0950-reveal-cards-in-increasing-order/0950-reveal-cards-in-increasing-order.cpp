@@ -8,9 +8,8 @@ public:
         int i=0, j=0;
         // j at ans vector, i at deck vector, j should always be moved
         int total=n;
-        while(1)
+        while(total>0)
         {
-            if(total == 0) break;
             if(ans[j] == -1)
             {
                 if(!flag)
