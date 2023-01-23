@@ -15,12 +15,9 @@ public:
     int height(TreeNode* root)
     {
         if(!root) return 0;
-        int left=0;
-        if(root->left)
-        left=1+height(root->left);
-        int right=0;
-        if(root->right)
-        right=1+height(root->right);
+        int left=0, right=0;
+        if(root->left) left=1+height(root->left);
+        if(root->right) right=1+height(root->right);
         ans=max(ans, left+right);
         return max(left, right);
     }
