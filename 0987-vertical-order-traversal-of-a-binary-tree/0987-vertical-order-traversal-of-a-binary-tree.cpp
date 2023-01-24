@@ -11,40 +11,31 @@
  */
 class Solution {
 public:
-    vector<vector<int>> verticalTraversal(TreeNode* root) 
-    {
-        map<int, map<int, multiset<int>>>m;
-        // vertical order, Level, Elements
-        queue<pair<TreeNode*, pair<int, int>>>q;
-        // node, level, order
-        q.push({root, {0, 0}});
+    vector<vector<int>> verticalTraversal(TreeNode* root) {
+        queue<pair<TreeNode*, int>>q; // node, vertical order
+        map<int, vector<int>>m; // vertical order, elements
+        q.push({root, 0});
         while(!q.empty())
         {
             int n=q.size();
+            vector<pair<int, int>>curLevel; // vertical order, elements
             for(int i=0; i<n; i++)
             {
                 TreeNode* node=q.front().first;
-                int level=q.front().second.first;
-                int order=q.front().second.second;
+                int order=q.front().second;
                 q.pop();
-                m[order][level].insert(node->val);
-                if(node->left) q.push({node->left, {level+1, order-1}});
-                if(node->right) q.push({node->right, {level+1, order+1}});
+                curLevel.push_back({order, node->val});
+                if(node->left) q.push({node->left, order-1});
+                if(node->right) q.push({node->right, order+1});
+            }
+            sort(curLevel.begin(), curLevel.end());
+            for(auto i: curLevel)
+            {
+                m[i.first].push_back(i.second);
             }
         }
         vector<vector<int>>ans;
-        for(auto i: m)
-        {
-            vector<int>cur;            
-            for(auto j: i.second)
-            {
-                for(auto k: j.second)
-                {
-                    cur.push_back(k);
-                }
-            }
-            ans.push_back(cur);
-        }
+        for(auto i: m) ans.push_back(i.second);
         return ans;
     }
 };
