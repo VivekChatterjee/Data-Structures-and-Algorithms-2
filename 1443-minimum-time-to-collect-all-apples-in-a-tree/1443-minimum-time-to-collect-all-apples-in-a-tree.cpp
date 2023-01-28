@@ -1,41 +1,30 @@
 class Solution {
 public:
-    int time(int i, vector<int>adj[], vector<bool>&hasApple, vector<int>&vis)
+    int time(int i, int par, vector<int>adj[], vector<bool>&hasApple)
     {
-        vis[i]=1;
         int ct=0;
         for(auto node: adj[i])
         {
-            if(!vis[node])
+            if(node != par)
             {
-                ct += time(node, adj, hasApple, vis);
+                ct += time(node, i, adj, hasApple);
             }
         }
-        if(i == 0)
-        {
-            return ct;
-        }
+        if(i == 0) return ct;
         else
         {
-            if(hasApple[i])
-            {
-                if(ct > 0) return ct+2;
-                else return 2;
-            }
-            else 
-            {
-                if(ct > 0) return ct+2;
-                else return 0;
-            }
+            if(ct > 0) return ct+2;
+            else if(hasApple[i]) return 2;
+            else return 0;
         }
     }
     int minTime(int n, vector<vector<int>>& edges, vector<bool>& hasApple) {
-        vector<int>adj[n], vis(n);
+        vector<int>adj[n];
         for(auto i: edges)
         {
             adj[i[0]].push_back(i[1]);
             adj[i[1]].push_back(i[0]);
         }
-        return time(0, adj, hasApple, vis);
+        return time(0, -1, adj, hasApple);
     }
 };
