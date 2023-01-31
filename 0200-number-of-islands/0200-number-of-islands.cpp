@@ -1,36 +1,25 @@
 class Solution {
 public:
-    void dfs(int ii, int jj, vector<vector<char>>& grid, vector<vector<int>> &vis)
+    void dfs(int i, int j, vector<vector<char>>& grid)
     {
-        int m = grid.size();
-        int n = grid[0].size();
-        vis[ii][jj] = 1;
-        vector<int>row{-1, 0, +1, 0};
-        vector<int>col{0,-1,0,+1};
-        for(int i=0; i<4; i++)
-        {
-            int r = ii+row[i];
-            int c = jj+col[i];
-            if(r>=0 && r<m && c>=0 && c<n && grid[r][c] == '1' && !vis[r][c])
-            {
-                dfs(r, c, grid, vis);
-            }
-        }
+        int m=grid.size(), n=grid[0].size();
+        if(i<0 || i>=m || j<0 || j>=n || grid[i][j] == '0') return;
+        grid[i][j]='0';
+        dfs(i+1, j, grid);
+        dfs(i-1, j, grid);
+        dfs(i, j+1, grid);
+        dfs(i, j-1, grid);
     }
     int numIslands(vector<vector<char>>& grid) {
-        int m = grid.size();
-        int n = grid[0].size();
-         vector<vector<int>> vis(m, vector<int>(n));
-        int ans = 0;
+        int m=grid.size(), n=grid[0].size(), ans=0;
         for(int i=0; i<m; i++)
         {
             for(int j=0; j<n; j++)
             {
-                if(!vis[i][j] && grid[i][j] == '1')
+                if(grid[i][j] == '1')
                 {
-                    vis[i][j] = 1;
+                    dfs(i, j, grid);
                     ans++;
-                    dfs(i, j, grid, vis);
                 }
             }
         }
