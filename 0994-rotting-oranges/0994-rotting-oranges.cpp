@@ -1,49 +1,42 @@
 class Solution {
 public:
-    int orangesRotting(vector<vector<int>> &grid) {
-        int m = grid.size();
-        int n = grid[0].size();
-        queue<pair<pair<int,int>, int>> q; // {{index, index}, time}
-        int fresh=0; 
-        for(int i=0;i<m;i++)
+    int orangesRotting(vector<vector<int>>& grid) {
+        int m=grid.size(), n=grid[0].size(), ans=0, fresh=0;
+        queue<pair<int, pair<int, int>>>q;
+        for(int i=0; i<m; i++)
         {
-            for(int j=0;j<n;j++)
+            for(int j=0; j<n; j++)
             {
-                if(grid[i][j]==2)
-                {
-                    q.push({{i, j}, 0});
-                }
-                if(grid[i][j] == 1)
-                    fresh++;
+                if(grid[i][j] == 2) q.push({0, {i, j}});
+                if(grid[i][j] == 1) fresh++;
             }
         }
-        if(fresh == 0) return 0;
-        int ans=0;
-        vector<int>row = {-1,0,+1,0};
-        vector<int>col = {0,-1,0,+1};
+        if(!fresh) return 0;
+        vector<int>row={-1, 0, 1, 0}, col={0, -1, 0, 1};
+        int ct=0;
         while(!q.empty())
         {
-            int size = q.size();
-            for(int i = 0; i < size; i++)
-            {
-                int rr = q.front().first.first;
-                int cc = q.front().first.second;
-                int t = q.front().second;
+            int nn=q.size();
+            for(int ii=0; ii<nn; ii++)
+            {   
+                int time=q.front().first, rr=q.front().second.first,            
+                cc=q.front().second.second;
+                grid[rr][cc]=2;
+                ans=max(ans, time);
                 q.pop();
-                for(int del = 0; del < 4; del++)
+                for(int i=0; i<4; i++)
                 {
-                    int r = rr + row[del];
-                    int c = cc + col[del];
-                    if(r>=0 && r<m && c>=0 && c<n && grid[r][c] == 1)
+                    int r=row[i]+rr, c=col[i]+cc;
+                    if(r>=0 && r<m && c>=0 && c<n && grid[r][c] == 1) 
                     {
+                        q.push({time+1, {r, c}});
                         grid[r][c] = 2;
-                        q.push({{r,c}, t+1});
-                        ans = max(ans, t+1);
-                        fresh--;
+                        ct++;
                     }
                 }
             }
         }
-        return (fresh > 0)? -1 : ans;
+        if(ct != fresh) return -1;
+        return ans;
     }
 };
