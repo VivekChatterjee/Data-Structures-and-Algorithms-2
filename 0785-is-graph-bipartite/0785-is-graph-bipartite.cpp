@@ -1,63 +1,32 @@
 class Solution {
 public:
-    bool isBip(bool one, int num, vector<vector<int>>& graph,  vector<int>&vis)
+    bool dfs(int node, bool isBlack, vector<vector<int>>& graph, vector<int>&vis)
     {
-        if(one) vis[num] = 1;
-        else vis[num] = -1;
-        for(auto i: graph[num])
+        vis[node] = (isBlack)? 1 : 2;
+        for(auto it: graph[node])
         {
-            if(vis[i] && vis[i] == vis[num]) return 0;
-            else if(!vis[i]) if(!isBip(!one, i, graph, vis)) return 0;
+            if(!vis[it])
+            {
+                if(!dfs(it, !isBlack, graph, vis)) return 0;
+            }
+            if(vis[it] && vis[it] == vis[node]) return 0;
         }
         return 1;
     }
     bool isBipartite(vector<vector<int>>& graph) {
-        int n = graph.size();
-        vector<int>vis(n, 0);   
+        int n=graph.size();
+        vector<int>vis(n);
+        // 0 if not visited
+        // 1 for black
+        // 2 for blue
         for(int i=0; i<n; i++)
         {
-            bool one = 1;
-            if(!vis[i]) if(!isBip(one, i, graph, vis)) return 0;
-        }   
+            if(!vis[i])
+            {
+                if(!dfs(i, 1, graph, vis)) return 0;
+            }
+        }
         return 1;
     }
 };
 
-// aise nahi banega
-// class Solution {
-// public:
-//     void dfs(int par, int num, int &len, bool &bip, vector<vector<int>>& graph
-//             , vector<int>&vis)
-//     {
-//         vis[num] = 1;
-//         for(auto i: graph[num])
-//         {
-//             if(!vis[i])
-//             {
-//                 if(bip) len++;
-//                 // cout<<num<<" se "<<i<<" gaya\n";
-//                 dfs(num, i, len, bip, graph, vis);
-//             }
-//             else if(vis[i] && i != par)
-//             {
-//                 // cout<<i<<" len= "<<len+1<<endl;
-//                 if(bip && (len+1) % 2 != 0) bip = 0;
-//             }
-//         }
-//     }
-//     bool isBipartite(vector<vector<int>>& graph) {
-//         int n = graph.size();
-//         vector<int>vis(n);
-//         for(int i=0; i<n; i++)
-//         {
-//             if(!vis[i])
-//             {
-//                 int len = 0;
-//                 bool bip = 1;
-//                 dfs(-1, i, len, bip, graph, vis);
-//                 if(!bip) return 0;
-//             }
-//         }
-//         return 1;
-//     }
-// };
