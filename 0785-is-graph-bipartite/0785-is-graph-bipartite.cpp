@@ -9,7 +9,7 @@ public:
             {
                 if(!dfs(it, !isBlack, graph, vis)) return 0;
             }
-            if(vis[it] && vis[it] == vis[node]) return 0;
+            else if(vis[it] && vis[it] == vis[node]) return 0;
         }
         return 1;
     }
