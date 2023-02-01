@@ -1,38 +1,36 @@
 #define pii pair<int, pair<int, int>>
+#define pi pair<int, int>
 class Solution {
 public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-        vector<pair<int, int>>adj[n]; // {node, cost}
+        vector<pi>adj[n]; // {node, weight}
         for(auto i: flights)
         {
             adj[i[0]].push_back({i[1], i[2]});
         }
-        vector<int>dis(n, 1e7);
-        dis[src] = 0;
-        // priority_queue<pii, vector<pii>, greater<pii>>p;
-        queue<pii>p;
-        // {stops, {node, cost}}
-        p.push({0, {src, 0}});
+        vector<int>dis(n, 1e8);
+        priority_queue<pii, vector<pii>, greater<pii>>p;
+        p.push({0, {0, src}});
+        // {stops, {price, node}}
         while(!p.empty())
         {
-            auto cur = p.front();
+            int stop=p.top().first;
+            int pastPrice=p.top().second.first;
+            int node=p.top().second.second;
             p.pop();
-            int stops = cur.first;
-            int flight = cur.second.first;
-            int curCost = cur.second.second;
-            for(auto to: adj[flight])
+            if(stop > k) break;
+            for(auto it: adj[node])
             {
-                int toFlight = to.first;
-                int cost = to.second;
-                int stop = stops;
-                if(toFlight != dst) stop+=1;
-                if(curCost + cost < dis[toFlight] && stop <= k)
+                int curPrice=it.second+pastPrice;
+                int curNode=it.first;
+                int curStop=(curNode == dst)? stop : stop+1;
+                if(curPrice<dis[curNode] && curStop<=k)
                 {
-                    dis[toFlight] = curCost + cost;
-                    p.push({stop, {toFlight, curCost + cost}});
+                    dis[curNode]=curPrice;
+                    p.push({curStop, {curPrice, curNode}});
                 }
             }
         }
-        return (dis[dst] == 1e7)? -1 : dis[dst];
+        return (dis[dst] == 1e8)? -1 : dis[dst];
     }
 };
