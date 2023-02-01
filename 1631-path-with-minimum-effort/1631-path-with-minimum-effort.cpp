@@ -1,39 +1,34 @@
-#define pipii pair<int, pair<int, int>>
+#define pii pair<int, pair<int, int>>
 class Solution {
 public:
-    int minimumEffortPath(vector<vector<int>>& grid) {
-        int m = grid.size();
-        int n = grid[0].size();
-        if(m == 1 && n == 1) return 0;
-        // {distance, {rowNode, colNode}}
-        priority_queue<pipii, vector<pipii>, greater<pipii>>p;
-        // priority_queue<pipii>p;
+    int minimumEffortPath(vector<vector<int>>& heights) {
+        int m=heights.size(), n=heights[0].size(), ans=INT_MAX;
+        priority_queue<pii, vector<pii>, greater<pii>>p; 
+        // {{curEffort, {row, col}}
         p.push({0, {0, 0}});
+        vector<int>row={-1, 0, 1 , 0}, col={0, -1, 0, 1};
         vector<vector<int>>dis(m, vector<int>(n, 1e7));
-        vector<int>row={-1, 0, 1, 0}, col = {0, -1, 0, 1};
         while(!p.empty())
         {
-            auto curElement = p.top();
+            int cur=p.top().first;
+            int i=p.top().second.first;
+            int j=p.top().second.second;
+            if(i==m-1 && j==n-1) return ans=cur;
             p.pop();
-            int curDis = curElement.first;
-            int curRow = curElement.second.first;
-            int curCol = curElement.second.second;
-            if(curRow == m-1 && curCol == n-1) return curDis;
-            for(int i=0; i<4;i++)
+            for(int adj=0; adj<4; adj++)
             {
-                int ii = curRow + row[i];
-                int jj = curCol + col[i];
-                if(ii>=0 && ii<m && jj>=0 && jj<n)
+                int r=row[adj]+i, c=col[adj]+j;
+                if(r>=0 && r<m && c>=0 && c<n)
                 {
-                    int abv = max(curDis, abs(grid[ii][jj] - grid[curRow][curCol]));
-                    if(abv < dis[ii][jj])
+                    int ab=max(cur, abs(heights[r][c]-heights[i][j]));
+                    if(ab<dis[r][c])
                     {
-                        dis[ii][jj] = abv;
-                        p.push({abv, {ii, jj}});
+                        dis[r][c]=ab;
+                        p.push({ab, {r, c}});
                     }
                 }
             }
         }
-        return -1;
+        return ans;        
     }
 };
