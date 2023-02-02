@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<int> majorityElement(vector<int>& nums) {
-        // there can be only be max of 2 majority element in an array
+        // there can only be atmost 2 majority elements in an array
         int c1=0, c2=0, a=0, b=0, n=nums.size();
         for(int i=0; i<n; i++)
         {
