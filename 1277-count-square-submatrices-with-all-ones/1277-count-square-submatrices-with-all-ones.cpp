@@ -9,7 +9,7 @@ public:
             {
                 if(i!=0 && j!=0 && matrix[i][j] == 1)
                 {
-                    int mini=min(matrix[i-1][j-1] , min(matrix[i-1][j], matrix[i][j-1]));
+                    int mini=min({matrix[i-1][j-1], matrix[i-1][j], matrix[i][j-1]});
                     matrix[i][j]=mini+1;
                 }
                 ans+=matrix[i][j];
