@@ -1,21 +1,21 @@
 class Solution {
 public:
-    int coin(int i, vector<int>&coins, int amount, vector<int>&dp)
-    {
-        int n=coins.size();
-        if(amount==0) return 0;
-        if(dp[amount] != -1) return dp[amount];
-        int ans=1e7;
-        for(auto it: coins)
+    int coinChange(vector<int>& arr, int amount) {
+        int n=arr.size();
+        vector<vector<int>>dp(n, vector<int>(amount+1, 1e8));
+        for(int i=0; i<n; i++) dp[i][0]=0;
+        for(int j=1; j<=amount; j++)
         {
-            if(amount-it>=0)
-            ans=min(ans, coin(i, coins, amount-it, dp)+1);
+            if(arr[0]<=j && j%arr[0]==0) dp[0][j]=j/arr[0];
         }
-        return dp[amount]=ans;
-    }
-    int coinChange(vector<int>& coins, int amount) {
-        vector<int>dp(amount+1, -1);
-        int ans=coin(0, coins, amount, dp);
-        return (ans >= 1e7)? -1 : ans;
+        for(int i=1; i<n; i++)
+        {
+            for(int j=1; j<=amount; j++)
+            {
+                if(arr[i]<=j) dp[i][j]=min(dp[i-1][j], 1+dp[i][j-arr[i]]);
+                else dp[i][j]=dp[i-1][j];
+            }
+        }
+        return (dp[n-1][amount]==1e8)? -1 : dp[n-1][amount];
     }
 };
