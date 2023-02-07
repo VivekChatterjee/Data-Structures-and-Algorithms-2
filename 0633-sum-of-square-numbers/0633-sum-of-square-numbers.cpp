@@ -1,15 +1,16 @@
-#define ll long long int
+#define ll long long
 class Solution {
 public:
     bool judgeSquareSum(int c) {
         if(c<3) return 1;
-        ll s=0, e=sqrt(c);
-        while(s<e)
+        ll s=1, e=sqrt(c);
+        while(s<=e)
         {
-            ll st=s*s, en=e*e;
-            if(2*st == c || 2*en == c || en == (c-st)) return 1;
-            else if(st + en < c) s++;
-            else e--;
+            ll a=s*s;
+            ll b=e*e;
+            if(a==c || b==c || a+b==c) return 1;
+            else if(a+b>c) e--;
+            else s++;
         }
         return 0;
     }
