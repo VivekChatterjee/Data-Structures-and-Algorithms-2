@@ -1,24 +1,23 @@
 class Solution {
 public:
-    int dist(int i, int j, string s, string t, vector<vector<int>>&dp)
-    {
+    int minDistance(string s, string t) {
         int n=s.size(), n2=t.size();
-        if(i==n) return n2-j;
-        if(j==n2) return n-i;
-        if(dp[i][j]!=-1) return dp[i][j];
-        int ins=0, rep=0, del=0;
-        if(s[i]==t[j]) return dp[i][j]=0+dist(i+1, j+1, s, t, dp);
-        else
+        vector<vector<int>>dp(n+1, vector<int>(n2+1));
+        for(int i=1; i<=n; i++) dp[i][0]=i;
+        for(int j=1; j<=n2; j++) dp[0][j]=j;
+        for(int i=1; i<=n; i++)
         {
-            ins=1+dist(i, j+1, s, t, dp);
-            rep=1+dist(i+1, j+1, s, t, dp);
-            del=1+dist(i+1, j, s, t, dp);
-            return dp[i][j]=min(ins, min(rep, del));
+            for(int j=1; j<=n2; j++)
+            {
+                if(s[i-1]==t[j-1]) dp[i][j]=dp[i-1][j-1];
+                else
+                {
+                    // del, rep, ins
+                    int mini=1+min({dp[i-1][j], dp[i-1][j-1], dp[i][j-1]});
+                    dp[i][j]=mini;
+                }
+            }
         }
-    }
-    int minDistance(string word1, string word2) {
-        int n=word1.size(), n2=word2.size();
-        vector<vector<int>>dp(n+1, vector<int>(n2+1, -1));
-        return dist(0, 0, word1, word2, dp);
+        return dp[n][n2];
     }
 };
