@@ -5,52 +5,12 @@ public:
         string ans="";
         while(i>=0 || j>=0 || carry)
         {
-            int num=0;
-            if(i<=0)
-            {
-                if(i==0 && a[i]=='1') num++;
-                i=-1;
-            }
-            else
-            {
-                if(a[i]=='1') num++;
-                i--;
-            }
-            if(j<=0)
-            {
-                if(j==0 && b[j]=='1') num++;
-                j=-1;
-            }
-            else
-            {
-                if(b[j]=='1') num++;
-                j--;
-            }
-            if(num+carry==3)
-            {
-                ans='1'+ans;
-                carry=1;
-            }
-            else if(num+carry==2 || num+carry==1)
-            {
-                if(num+carry==2)
-                {
-                    ans='0'+ans;
-                    carry=1;
-                }
-                else
-                {
-                    ans='1'+ans;
-                    carry=0;
-                }
-            }
-            else
-            {
-                ans='0'+ans;
-                carry=0;
-            }
+            int sum=carry;
+            if(i>=0) sum += a[i--]-'0';
+            if(j>=0) sum += b[j--]-'0';
+            carry=(sum>1)?1:0;
+            ans=to_string(sum%2)+ans;
         }
-        
         return ans;
     }
 };
