@@ -13,11 +13,9 @@ public:
         int n=arr.size();
         if(i<0 || i>=n) return 2; // safe
         if(arr[i]==0) return 1; // self loop
-        if(vis[i]) return vis[i];
-        if(vis[i]!=0) return vis[i];
+        if(vis[i]) return vis[i]; // already visited, either safe or unsafe
         vis[i]=1;
-        int go=good(i+arr[i], arr, vis);
-        return vis[i]=go;
+        return vis[i]=good(i+arr[i], arr, vis);
     }
     int goodStones(int n,vector<int> &arr){
         vector<int>vis(n);
