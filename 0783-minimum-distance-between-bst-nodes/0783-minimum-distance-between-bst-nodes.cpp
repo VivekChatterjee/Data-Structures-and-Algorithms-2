@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    int ans=INT_MAX, prev=1e5+2;
+    int ans=INT_MAX, prev=1e5+1;
     void calculate(TreeNode* root)
     {
         if(!root) return;
