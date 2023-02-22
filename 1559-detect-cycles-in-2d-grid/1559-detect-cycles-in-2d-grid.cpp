@@ -3,7 +3,6 @@ public:
     vector<int>row={-1, 0, 1, 0}, col={0, -1, 0, 1};
     bool cycle(int pari, int parj, int i, int j, int len, vector<vector<char>>& grid, vector<vector<int>>& vis)
     {
-        // cout<<i<<" "<<j<<" pari="<<pari<<" "<<parj<<endl;
         int m=grid.size(), n=grid[0].size();
         vis[i][j]=1;
         for(int k=0; k<4; k++)
@@ -14,17 +13,9 @@ public:
             {
                 if(!vis[r][c]) 
                 {
-                    // cout<<i<<" "<<j<<" se r="<<r<<" c="<<c<<" jao"<<endl;
-                    if(cycle(i, j, r, c, len+1, grid, vis))
-                    return 1;
+                    if(cycle(i, j, r, c, len+1, grid, vis)) return 1;
                 }
-                else if(vis[r][c] && len+1>=4)
-                {
-                    // cout<<i<<" "<<j<<endl;
-                    // cout<<vis[r][c]<<endl;
-                    // cout<<i<<" "<<j<<" r="<<r<<" "<<c<<endl;
-                    return 1;
-                }
+                else if(vis[r][c] && len+1>=4) return 1;
             }
         }
         return 0;
