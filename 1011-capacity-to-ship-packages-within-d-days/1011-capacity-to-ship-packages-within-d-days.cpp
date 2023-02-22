@@ -2,24 +2,22 @@ class Solution {
 public:
     bool isValid(int mid, vector<int>& weights, int days)
     {
-        int n=1, cur=0;
-        for(int i: weights)
+        int n=weights.size();
+        int ct=1, sum=0;
+        for(int i=0; i<n; i++)
         {
-            if(i>mid) return 0;
-            cur+=i;
-            if(cur>mid)
+            sum+=weights[i];
+            if(sum>mid)
             {
-                n++;
-                cur=i;
+                ct++;
+                sum=weights[i];
             }
-            if(n>days) return 0;
         }
-        return n<=days;
+        return ct<=days;
     }
     int shipWithinDays(vector<int>& weights, int days) {
-        int s=INT_MAX, e=0;
-        for(int i: weights) s=min(s, i) , e += i;
-        int ans=-1;
+        int n=weights.size(), s=weights[0], e=0, ans=weights[0];
+        for(int i: weights) s=max(s, i), e+=i;
         while(s<=e)
         {
             int mid=s+(e-s)/2;
