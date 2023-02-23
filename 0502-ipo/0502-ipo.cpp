@@ -9,21 +9,20 @@ public:
             v.push_back({cap[i], profits[i]});
         }
         sort(v.begin(), v.end());
-        int in=0, ans=w, cur=0;
-        priority_queue<pair<int, int>>p; // {profit, cap}
+        int in=0;
+        priority_queue<int>p; // {profit}
         while((in<n && k) || k)
         {
             while(in<n && v[in].first<=w)
             {
-                p.push({v[in].second, v[in].first});
+                p.push(v[in].second);
                 in++;
             }
             if(p.empty()) break;
-            w+=p.top().first;
-            ans+=p.top().first;
+            w+=p.top();
             p.pop();
             k--;
         }
-        return ans;
+        return w;
     }
 };
