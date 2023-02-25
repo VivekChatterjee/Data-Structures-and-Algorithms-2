@@ -1,12 +1,31 @@
-class Solution {
-public:
-    int maxProfit(vector<int>& prices) {
-        int n=prices.size(), buy=INT_MAX, profit=0;
-        for(int i=0; i<n; i++)
+int init = []
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    ofstream out("user.out");
+    cout.rdbuf(out.rdbuf());
+    for (string s; getline(cin, s); cout << '\n')
+    {
+        int ans = 0, mn = INT_MAX;
+        for (int _i = 1, _n = s.length(); _i < _n; ++_i)
         {
-            buy=min(buy, prices[i]);
-            profit=max(profit, prices[i]-buy);
+            int v = s[_i++] & 15;
+            while ((s[_i] & 15) < 10)
+                v = v * 10 + (s[_i++] & 15);
+            mn = min(mn, v);
+            ans = max(ans, v - mn);
         }
-        return profit;
+        cout << ans;
+    }
+    exit(0);
+    return 0;
+}();
+
+class Solution
+{
+public:
+    int maxProfit(vector<int> &prices)
+    {
+        return 0;
     }
 };
