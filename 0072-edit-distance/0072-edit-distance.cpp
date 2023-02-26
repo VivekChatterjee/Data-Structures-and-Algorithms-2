@@ -3,7 +3,6 @@ public:
     int distance(int i, int j, string &s, string &t, vector<vector<int>>&dp)
     {
         int n=s.size(), nn=t.size();
-        if(i==n && j==nn) return 0;
         if(i==n) return nn-j;
         if(j==nn) return n-i;
         if(dp[i][j]!=-1) return dp[i][j];
