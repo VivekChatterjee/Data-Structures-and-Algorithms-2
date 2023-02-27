@@ -3,12 +3,16 @@ public:
     bool match(int i, int j, string &s, string &p, vector<vector<int>>&dp)
     {
         int n=s.size(), np=p.size();
-        if(i==n and j==np) return dp[i][j]=1; //both ends
-        if(i==n and p[j]!='*') return dp[i][j]=0; //string ends but pattern doesnt have *
-        if(j==np) return dp[i][j]=0; //only pattern ends
+        if(i==n and j==np) 
+            return dp[i][j]=1; //both ends
+        if(i==n and p[j]!='*') 
+            return dp[i][j]=0; //string ends but pattern doesnt have *
+        if(j==np) 
+            return dp[i][j]=0; //only pattern ends
+        
         if(dp[i][j]!=-1) return dp[i][j];
         //single character matches
-        if(p[j]=='?' or (i<n and p[j]==s[i])) return dp[i][j]=match(i+1,j+1, s, p, dp);
+        if(p[j]=='?' or (p[j]==s[i])) return dp[i][j]=match(i+1,j+1, s, p, dp);
         bool one=0, two=0, three=0, pos=0;
         if(p[j]=='*')
         {
