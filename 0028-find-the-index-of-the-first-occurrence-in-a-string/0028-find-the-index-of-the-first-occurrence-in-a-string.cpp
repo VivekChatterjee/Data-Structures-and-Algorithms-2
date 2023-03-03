@@ -1,27 +1,24 @@
 class Solution {
 public:
     int strStr(string s, string t) {
-        int si=0, sj=0, ti=0, ans=-1;
-        int n=s.size(), nt=t.size();
-        while(sj<=n)
+        int n=s.size(), nn=t.size();
+        int i=0, j=0, ti=0, ans=-1;
+        while(j<=n)
         {
-            if(ti==nt) 
+            if(ti==nn)
             {
-                ans=si;
+                ans=i;
                 break;
             }
-            if(sj==n) break;
-            if(s[sj]==t[ti])
-            {
-                ti++;
-            }
+            if(j==n) break;
+            if(s[j]==t[ti]) ti++;
             else
             {
-                sj=si;
-                si++;
+                j=i;
+                i++;
                 ti=0;
             }
-            sj++;
+            j++;
         }
         return ans;
     }
