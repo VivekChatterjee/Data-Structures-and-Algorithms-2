@@ -9,6 +9,7 @@ public:
             {
                 ans=i;
                 break;
+//                 hn fir kya haal chaal
             }
             if(j==n) break;
             if(s[j]==t[ti]) ti++;
