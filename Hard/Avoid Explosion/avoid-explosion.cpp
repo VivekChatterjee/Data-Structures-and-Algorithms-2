@@ -8,97 +8,71 @@ using namespace std;
 // } Driver Code Ends
 // User function Template for C++
 
-// class Solution {
-//   public:
-//     vector<int>par;
-//     int findPar(int a)
-//     {
-//         if(par[a]==a) return a;
-//         return par[a]=findPar(par[a]);
-//     }
-//     vector<string> avoidExplosion(vector<vector<int>> mix, int n,
-//     vector<vector<int>> danger, int m) 
-//     {
-//         par.resize(n+1);
-//         for(int i=0; i<=n; i++)
-//         {
-//             par[i]=i;
-//         }
-//         vector<int>prev=par;
-//         vector<string>ans;
-//         for(auto i: mix)
-//         {
-//             int parA=findPar(i[0]);
-//             int parB=findPar(i[1]);
-//             if(parA!=parB)
-//             {
-//                 par[parA]=parB;
-//             }
-//             bool pos=1;
-//             for(auto it: danger)
-//             {
-//                 int parA=findPar(it[0]);
-//                 int parB=findPar(it[1]);
-//                 if(parA==parB)
-//                 {
-//                     pos=0;
-//                 }
-//             }
-//             if(pos)
-//             {
-//                 ans.push_back("Yes");
-//                 prev=par;
-//             }
-//             else
-//             {
-//                 ans.push_back("No");
-//                 par=prev;
-//             }
-//         }
-//         return ans;
-//     }
-// };
-
 class Solution {
   public:
-    int dsu(vector<int>& parent, int x){
-        if(parent[x] == x){
-            return x;
-        }
-        return parent[x] = dsu(parent,parent[x]);
+    vector<int>par, size;
+    int findPar(int a)
+    {
+        if(par[a]==a) return a;
+        return par[a]=findPar(par[a]);
     }
-    vector<string> avoidExplosion(vector<vector<int>> mix, int n, vector<vector<int>> danger, int m){
-    
-        vector<int>parent(n+1),org(n+1);
-        vector<string>ans(n);
-        for(int i = 0; i <= n; i++){
-            parent[i] = i;
+    void uni(int a, int b)
+    {
+        int parA=findPar(a);
+        int parB=findPar(b);
+        if(parA==parB) return;
+        else if(size[parA]>=size[parB])
+        {
+            par[parB]=parA;
+            size[parA]+=size[parB];
         }
-        org = parent;
-        for(int i = 0; i < n; i++){
-            int paru = dsu(parent,mix[i][0]), parv = dsu(parent,mix[i][1]);
-            if(paru != parv){
-                parent[paru] = parv;
-            }
-            bool c = true;
-            for(int j = 0; j < m; j++){
-                int parx = dsu(parent,danger[j][0]),pary = dsu(parent,danger[j][1]);
-                if(parx == pary){
-                    c = false;
+        else
+        {
+            par[parA]=parB;
+            size[parB]+=size[parA];
+        }
+    }
+    vector<string> avoidExplosion(vector<vector<int>> mix, int n,
+    vector<vector<int>> danger, int m) 
+    {
+        par.resize(n+1);
+        size.resize(n+1, 1);
+        for(int i=0; i<=n; i++)
+        {
+            par[i]=i;
+        }
+        vector<string>ans;
+        for(auto &i: mix)
+        {
+            int parA=findPar(i[0]);
+            int parB=findPar(i[1]);
+            bool pos=1;
+            for(auto &it: danger)
+            {
+                int parC=findPar(it[0]);
+                int parD=findPar(it[1]);
+                if((parA==parC && parB==parD) || (parA==parD && parB==parC))
+                {
+                    pos=0;
+                    break;
                 }
             }
-            if(c){
-                ans[i] = "Yes";
-                org = parent;
+            if(pos)
+            {
+                ans.push_back("Yes");
+                uni(i[0], i[1]);
             }
-            else{
-                ans[i] = "No";
-                parent = org;
+            else
+            {
+                ans.push_back("No");
             }
         }
         return ans;
     }
 };
+
+
+
 
 
 
