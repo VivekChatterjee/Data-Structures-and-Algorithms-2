@@ -4,7 +4,7 @@ public:
         unordered_map<int, vector<int>>m;
         int n=arr.size();
         if(n==1) return 0;
-        for(int i=0; i<n; i++)
+        for(int i=n-1; i>=0; i--)
         {
             m[arr[i]].push_back(i);
         }
