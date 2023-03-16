@@ -1,34 +1,37 @@
 class Solution {
 public:
-    bool canFinish(int v, vector<vector<int>>& pre) {
-        vector<int>adj[v];
-        for(auto i: pre)
+    bool canFinish(int num, vector<vector<int>>& pre) {
+        vector<int>ind(num);
+        vector<int>adj[num];
+        for(auto &it: pre)
         {
-            adj[i[1]].push_back(i[0]);
-        }
-        vector<int>indig(v);
-        for(int i=0; i<v; i++)
-        {
-            for(auto num: adj[i])
-            indig[num]++;
+            adj[it[1]].push_back(it[0]);
+            ind[it[0]]++;
         }
         queue<int>q;
-        for(int i=0; i<v; i++)
+        for(int i=0; i<num; i++)
         {
-            if(indig[i] == 0) q.push(i);
-        }
-        int count = 0;
-        while(!q.empty())
-        {
-            int f = q.front();
-            q.pop();
-            count++;
-            for(auto i: adj[f])
+            if(ind[i] == 0)
             {
-                indig[i]--;
-                if(indig[i] == 0) q.push(i);
+                q.push(i);
             }
         }
-        return (count == v);
+        int ct=0;
+        while(!q.empty())
+        {
+            int front=q.front();
+            q.pop();
+            ct++;
+            for(auto &it: adj[front])
+            {
+                ind[it]--;
+                if(ind[it] == 0)
+                {
+                    q.push(it);
+                }
+            }
+        }
+        return ct==num;
+        
     }
 };
