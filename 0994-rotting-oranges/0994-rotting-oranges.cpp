@@ -22,7 +22,7 @@ public:
                 int time=q.front().first, rr=q.front().second.first,            
                 cc=q.front().second.second;
                 grid[rr][cc]=2;
-                ans=max(ans, time);
+                ans=time;
                 q.pop();
                 for(int i=0; i<4; i++)
                 {
