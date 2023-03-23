@@ -1,32 +1,46 @@
 class Solution {
 public:
-    void dfs(int i, vector<int>adj[], vector<int>&vis)
+    vector<int>par, size;
+    int findPar(int a)
     {
-        vis[i]=1;
-        for(auto it: adj[i])
+        if(par[a]==a) return a;
+        return par[a]=findPar(par[a]);
+    }
+    void unionSize(int a, int b)
+    {
+        int parA=findPar(a);
+        int parB=findPar(b);
+        if(parA==parB) return;
+        else if(size[parA]>=size[parB])
         {
-            if(!vis[it]) dfs(it, adj, vis);
+            par[parB]=parA;
+            size[parA]+=size[parB];
+        }
+        else
+        {
+            par[parA]=parB;
+            size[parB]+=size[parA];
         }
     }
-    int makeConnected(int n, vector<vector<int>>& con) {
-        int size=con.size();
-        if(size < n-1) return -1;
-        vector<int>adj[n];
-        for(auto i: con)
-        {
-            adj[i[0]].push_back(i[1]);
-            adj[i[1]].push_back(i[0]);
-        }
-        int ct=0;
-        vector<int>vis(n);
+    int makeConnected(int n, vector<vector<int>>& c) {
+        if(c.size()<n-1) return -1;
+        par.resize(n);
+        size.resize(n, 1);
         for(int i=0; i<n; i++)
         {
-            if(!vis[i])
-            {
-                dfs(i, adj, vis);
-                ct++;
-            }
+            par[i]=i;
         }
-        return ct-1;
+        for(auto i: c)
+        {
+            unionSize(i[0], i[1]);
+        }
+        int ans=0;
+        for(int i=0; i<n; i++)
+        {
+            int parent=findPar(i);
+            if(parent==i)
+            ans++;
+        }
+        return ans-1;
     }
 };
