@@ -11,13 +11,28 @@
  */
 class Solution {
 public:
-    bool symmetric(TreeNode* left, TreeNode* right)
-    {
-        if(!left && !right) return 1;
-        else if(!left || !right) return 0;
-        return left->val == right->val && symmetric(left->right, right->left) && symmetric(left->left, right->right);
-    }
     bool isSymmetric(TreeNode* root) {
-        return symmetric(root->left, root->right);
+        queue<TreeNode*> q;
+        q.push(root->left);
+        q.push(root->right);
+        while(!q.empty())
+        {
+            TreeNode* left=q.front();
+            q.pop();
+            TreeNode* right=q.front();
+            q.pop();
+            bool nuLL=0;
+            if(!left && !right) nuLL=1;            
+            if((!left && right) || (left && !right) || (!nuLL && left->val != right->val))
+                return 0;
+            if(left)
+            {
+                q.push(left->left);
+                q.push(right->right);
+                q.push(left->right);
+                q.push(right->left);
+            }
+        }
+        return 1;
     }
 };
