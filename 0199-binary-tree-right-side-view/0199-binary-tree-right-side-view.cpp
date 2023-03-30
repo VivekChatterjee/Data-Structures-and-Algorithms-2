@@ -28,8 +28,12 @@ public:
                 {
                     ans.push_back(node->val);
                 }
-                if(node->right) q.push(node->right);
+                else if(level<ans.size())
+                {
+                    ans[level]=node->val;
+                }
                 if(node->left) q.push(node->left);
+                if(node->right) q.push(node->right);
             }
             level++;
         }
