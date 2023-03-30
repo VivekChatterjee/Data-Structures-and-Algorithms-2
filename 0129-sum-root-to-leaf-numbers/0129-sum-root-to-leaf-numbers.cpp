@@ -7,10 +7,10 @@ public:
         if(!root->left && !root->right)
         {
             ans+=cur;
-            return ans;
+            return cur;
         }
-        sumNumbers(root->left, cur);
-        sumNumbers(root->right, cur);
+        sumNumbers(root->left, cur);   
+        sumNumbers(root->right, cur);   
         return ans;
     }
 };
