@@ -28,7 +28,7 @@ public:
                 {
                     ans.push_back(node->val);
                 }
-                else if(level<ans.size())
+                else
                 {
                     ans[level]=node->val;
                 }
