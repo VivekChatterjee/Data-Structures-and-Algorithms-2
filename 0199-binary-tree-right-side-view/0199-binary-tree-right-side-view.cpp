@@ -24,15 +24,15 @@ public:
             {
                 TreeNode* node=q.front();
                 q.pop();
+                if(node->left) q.push(node->left);
                 if(level == ans.size())
                 {
                     ans.push_back(node->val);
                 }
-                else
+                else if(level<ans.size())
                 {
                     ans[level]=node->val;
                 }
-                if(node->left) q.push(node->left);
                 if(node->right) q.push(node->right);
             }
             level++;
