@@ -2,7 +2,7 @@ class Solution {
 public:
     static bool cmp(pair<int, int>&a, pair<int, int>&b)
     {
-        return a.second-a.first < b.second-b.first;
+        return a.first-a.second > b.first-b.second;
     }
     int miceAndCheese(vector<int>& a, vector<int>& b, int k) {
         vector<pair<int, int>>v;
