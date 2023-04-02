@@ -1,22 +1,21 @@
 class Solution {
 public:
+    vector<int>row={-2,-2,+2,+2,-1,-1,+1,+1};
+    vector<int>col={-1,+1,-1,+1,-2,+2,-2,+2};
     bool check(int cur, int i, int j, vector<vector<int>>& grid)
     {
         int n=grid.size();
-        if(i<0 || j<0 || i>=n || j>=n || grid[i][j]!=cur) return 0;
-        if(cur==(n*n-1))
+        if(cur==(n*n-1)) return 1;
+        bool possible=0;
+        for(int k=0; k<8; k++)
         {
-            return 1;
+            int r=i+row[k];
+            int c=j+col[k];
+            if(r>=0 && r<n && c>=0 && c<n && grid[r][c]==(cur+1)) 
+                possible|=check(cur+1, r, c, grid);
+            if(possible) return 1;
         }
-        bool ul=check(cur+1, i-2, j-1, grid);
-        bool ur=check(cur+1, i-2, j+1, grid);
-        bool dl=check(cur+1, i+2, j-1, grid);
-        bool dr=check(cur+1, i+2, j+1, grid);
-        bool lu=check(cur+1, i-1, j-2, grid);
-        bool ld=check(cur+1, i+1, j-2, grid);
-        bool ru=check(cur+1, i-1, j+2, grid);
-        bool rd=check(cur+1, i+1, j+2, grid);
-        return (ul || ur || dl || dr || lu || ld || ru || rd);
+        return possible;
     }
     bool checkValidGrid(vector<vector<int>>& grid) {
         int n=grid.size();
