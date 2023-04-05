@@ -39,6 +39,7 @@ class Solution {
                     {
                         ans[j]=1;
                     }
+                    vis[j]=1;
                 }
                 vis[num]=1;
             }
@@ -46,7 +47,6 @@ class Solution {
         int res=0;
         for(int i=0; i<n; i++)
         {
-            // cout<<arr[i]<<"="<<ans[arr[i]]<<endl;
             if(ans[arr[i]])
             {
                 res++;
