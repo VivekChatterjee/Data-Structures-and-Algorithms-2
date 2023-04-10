@@ -15,7 +15,6 @@ public:
                 q.pop();
                 if(r==m-1 && c==n-1) return ans+1;
                 vis[r][c]=1;
-                if(grid[r][c]==0) continue;
                 for(int k=min(grid[r][c], n-c); k>=0; k--)
                 {
                     if(c+k<n && !vis[r][c+k])
