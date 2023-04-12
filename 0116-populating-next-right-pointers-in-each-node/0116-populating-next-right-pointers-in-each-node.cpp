@@ -2,15 +2,21 @@ class Solution {
 public:
     Node* connect(Node* root) {
         if(!root) return root;
-        dfs(root->left, root->right);
+        Node * left=root;
+        while(left->left)
+        {
+            Node *cur=left;
+            while(cur)
+            {
+                cur->left->next=cur->right;
+                if(cur->next)
+                {
+                    cur->right->next=cur->next->left;
+                }
+                cur=cur->next;
+            }
+            left=left->left;
+        }
         return root;
     }
-    void dfs(Node* left, Node* right)
-    {
-        if(!left) return;
-        left->next=right;
-        dfs(left->left, left->right);
-        dfs(left->right, right->left);
-        dfs(right->left, right->right);
-    }
-};
+};  
