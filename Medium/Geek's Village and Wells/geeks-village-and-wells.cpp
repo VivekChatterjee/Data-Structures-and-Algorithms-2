@@ -13,14 +13,14 @@ public:
     vector<vector<int>> chefAndWells(int n, int m, vector<vector<char>> &c){
         vector<vector<int>>ans(n, vector<int>(m, -1));
         vector<vector<int>>vis(n, vector<int>(m));
-        queue<pair<int, int>>q;
+        queue<pair<int, pair<int, int>>>q;
         for(int i=0; i<n; i++)
         {
             for(int j=0; j<m; j++)
             {
                 if(c[i][j]=='W')
                 {
-                    q.push({i, j});
+                    q.push({0, {i, j}});
                     ans[i][j]=0;
                     vis[i][j]=1;
                 }
@@ -36,14 +36,11 @@ public:
             }
         }
         vector<int>dir={-1, 0, 1, 0, -1};
-        int curDis=1;
         while(!q.empty())
         {
-            int sz=q.size();
-            while(sz--)
-            {
-                int row=q.front().first;
-                int col=q.front().second;
+                int curDis=q.front().first;
+                int row=q.front().second.first;
+                int col=q.front().second.second;
                 q.pop();
                 for(int i=0; i<4; i++)
                 {
@@ -52,12 +49,10 @@ public:
                     if(r>=0 && r<n && co>=0 && co<m && !vis[r][co] && (c[r][co]=='.' || c[r][co]=='H'))
                     {
                         vis[r][co]=1;
-                        q.push({r, co});
-                        if(c[r][co]=='H') ans[r][co]=curDis*2;
+                        q.push({curDis+1, {r, co}});
+                        if(c[r][co]=='H') ans[r][co]=(curDis+1)*2;
                     }
                 }
-            }
-            curDis++;
         }
         return ans;
     }
