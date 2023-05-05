@@ -12,12 +12,7 @@ public:
         vector<vector<string>>ans;
         for(auto i: m)
         {
-            vector<string>v;
-            for(auto j: i.second)
-            {
-                v.push_back(j);
-            }
-            ans.push_back(v);
+            ans.push_back(i.second);
         }
         return ans;
     }
