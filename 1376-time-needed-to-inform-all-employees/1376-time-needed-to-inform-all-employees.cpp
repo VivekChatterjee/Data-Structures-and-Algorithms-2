@@ -11,8 +11,6 @@ public:
         }
         queue<pair<int, int>>q;
         q.push({headId, 0});
-        vector<int>vis(n);
-        vis[headId] = 1;
         int ans = 0;
         while(!q.empty())
         {
