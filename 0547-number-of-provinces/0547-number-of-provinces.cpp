@@ -57,8 +57,17 @@ public:
                 if(isConnected[i][j] == 1) d.findUnionBySize(i, j);
             }
         }
-        set<int>ans;
-        for(int i=0; i<n; i++) ans.insert(d.findPar(i));
-        return ans.size();
+        // set<int>ans;
+        // for(int i=0; i<n; i++) ans.insert(d.findPar(i));
+        // return ans.size();
+        
+        
+        // Or Count number of Ultimate Parents
+        int count = 0;
+        for(int i=0; i<n; i++)
+        {
+            if(d.findPar(i) == i) count++;
+        }
+        return count;
     }
 };
