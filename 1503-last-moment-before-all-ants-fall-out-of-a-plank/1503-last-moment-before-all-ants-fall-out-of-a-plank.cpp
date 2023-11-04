@@ -2,13 +2,10 @@ class Solution {
 public:
     int getLastMoment(int n, vector<int>& l, vector<int>& r) {
         int ans=0;
-        for(int i=0; i<l.size(); i++)
+        for(int i=0; i<max(l.size(), r.size()); i++) 
         {
-            ans=max(ans, l[i]);
-        }
-        for(int i=0; i<r.size(); i++)
-        {
-            ans=max(ans, n-r[i]);
+            if(i<l.size()) ans=max(ans, l[i]);
+            if(i<r.size()) ans=max(ans, n-r[i]);
         }
         return ans;
     }
