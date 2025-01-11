@@ -13,17 +13,41 @@ class Solution {
         }
         st.push(node);
     }
-    vector<int> topologicalSort(vector<vector<int>>& adj) {
-        stack<int>st;
-        vector<int>vis(adj.size());
+    void kahn(vector<vector<int>>& adj, vector<int>&ans){
+        queue<int>q;
+        vector<int>indeg(adj.size());
+        for(auto it: adj){
+            for(int i: it){
+                indeg[i]++;
+            }
+        }
         for(int i=0; i<adj.size(); i++){
-            if(!vis[i]) dfs(adj, vis, st, i);
+            if(!indeg[i]) q.push(i);
         }
+        while(!q.empty()){
+            int top=q.front();
+            q.pop();
+            ans.push_back(top);
+            for(auto it: adj[top]){
+                indeg[it]--;
+                if(!indeg[it]) q.push(it);
+            }
+        }
+    }
+    vector<int> topologicalSort(vector<vector<int>>& adj) {
+        // stack<int>st;
+        // vector<int>vis(adj.size());
+        // for(int i=0; i<adj.size(); i++){
+        //     if(!vis[i]) dfs(adj, vis, st, i);
+        // }
+        // vector<int>ans;
+        // while(!st.empty()){
+        //     ans.push_back(st.top());
+        //     st.pop();
+        // }
+        // return ans;
         vector<int>ans;
-        while(!st.empty()){
-            ans.push_back(st.top());
-            st.pop();
-        }
+        kahn(adj, ans);
         return ans;
     }
 };
