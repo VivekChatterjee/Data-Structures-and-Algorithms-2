@@ -6,28 +6,53 @@ using namespace std;
 // } Driver Code Ends
 //User function Template for C++
 
-class Solution {
-  public:
-    void dfs(vector<vector<int>>& is, vector<int>&vis, int i){
-        vis[i]=1;
-        for(int j=0; j<is[0].size(); j++){
-            if(is[i][j] && !vis[j])
-            {
-                dfs(is, vis, j);
-            }
+class DisjointSet{
+    vector<int>par, rank;
+public:
+    DisjointSet(int n){
+        par.resize(n+1);
+        rank.resize(n+1);
+        for(int i=1; i<=n; i++) par[i]=i;
+    }
+    
+    int findPar(int node){
+        if(par[node]==node) return node;        
+        return par[node]=findPar(par[node]);
+    }
+    
+    void unionByRank(int u, int v){
+        int paru=findPar(u);
+        int parv=findPar(v);
+        
+        if(rank[paru] < rank[parv]){
+            par[paru]=parv;
+        }
+        else if(rank[paru] > rank[parv]){
+            par[parv]=paru;
+        }
+        else{
+            par[paru]=parv;
+            rank[parv]++;
         }
     }
-    int numProvinces(vector<vector<int>> is, int V) {
-        int num=0;
-        vector<int>vis(is.size());
-        for(int i=0; i<is.size(); i++){
-            if(is[i][i] && !vis[i])
-            {
-                num++;
-                dfs(is, vis, i);
+};
+
+class Solution {
+  public:
+    int numProvinces(vector<vector<int>> adj, int v) {
+        DisjointSet ds(v);
+        for(int i=0; i<adj.size(); i++){
+            for(int j=0; j<adj[i].size(); j++){
+                if(adj[i][j] && i!=j){
+                    ds.unionByRank(i, j);
+                }
             }
         }
-        return num;
+        set<int>s;
+        for(int i=0; i<v; i++){
+            s.insert(ds.findPar(i));
+        }
+        return s.size();
     }
 };
 
